@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Megapixellk — Creative Design Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #131317;
+    --bg3: #1a1a20;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.14);
+    --text: #e8e4dc;
+    --muted: #7a7872;
+    --accent: #c8a96e;
+    --accent2: #e8d5a3;
+    --white: #f2ede5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    position: fixed; top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.08s ease, width 0.3s, height 0.3s, border-color 0.3s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring.expanded { width: 60px; height: 60px; border-color: rgba(200,169,110,0.2); }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s, background 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(13,13,15,0.92);
+    backdrop-filter: blur(12px);
+    border-color: var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* Hero */
+  #home {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 8rem 3rem 5rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 2.5rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 0.72rem;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 380px;
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 1rem;
+    padding: 1rem 2rem;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    transition: background 0.3s, color 0.3s;
+  }
+  .hero-cta:hover { background: var(--accent); color: var(--bg); }
+  .hero-cta::after { content: '→'; }
+
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-visual {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-grid-art {
+    width: 100%; height: 100%;
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 1px;
+    opacity: 0.15;
+  }
+  .hero-grid-art div {
+    background: var(--border2);
+    animation: pulse-grid 4s ease-in-out infinite;
+  }
+  .hero-grid-art div:nth-child(3n) { animation-delay: 0.5s; }
+  .hero-grid-art div:nth-child(5n) { animation-delay: 1.2s; background: rgba(200,169,110,0.3); }
+  @keyframes pulse-grid {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+  .hero-big-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,169,110,0.2);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    user-select: none;
+    position: relative; z-index: 2;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .hero-scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 3rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted);
+  }
+  .hero-scroll-hint::before {
+    content: '';
+    display: block; width: 1px; height: 40px;
+    background: var(--muted);
+    animation: scrollline 2s ease-in-out infinite;
+  }
+  @keyframes scrollline { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* Services strip */
+  .services-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1.2rem 3rem;
+    display: flex; gap: 3rem; align-items: center; overflow: hidden;
+    background: var(--bg2);
+  }
+  .services-strip span {
+    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap; flex-shrink: 0;
+  }
+  .services-strip span.dot { color: var(--accent); font-size: 0.8rem; }
+
+  /* Section commons */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content:''; display:block; width:30px; height:1px; background:var(--accent); }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300; color: var(--white); line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  /* About */
+  #about {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .about-left {}
+  .about-body {
+    font-size: 0.75rem; line-height: 2; color: var(--muted);
+    letter-spacing: 0.04em; margin-bottom: 2rem;
+  }
+  .about-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border); border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+  .stat {
+    background: var(--bg2); padding: 1.5rem 1rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300; color: var(--accent);
+    display: block; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); display: block; margin-top: 0.4rem;
+  }
+  .about-right {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .skills-list { list-style: none; }
+  .skills-list li {
+    border-bottom: 1px solid var(--border);
+    padding: 1.1rem 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.7rem; letter-spacing: 0.1em; color: var(--muted);
+    transition: color 0.3s;
+  }
+  .skills-list li:hover { color: var(--text); }
+  .skills-list li:first-child { border-top: 1px solid var(--border); }
+  .skill-icon { color: var(--accent); font-size: 0.6rem; letter-spacing: 0.2em; }
+
+  /* Portfolio */
+  #portfolio { background: var(--bg); }
+  .portfolio-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .portfolio-filter { display: flex; gap: 1.5rem; }
+  .filter-btn {
+    background: none; border: none; cursor: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); transition: color 0.3s; padding: 0.3rem 0;
+    border-bottom: 1px solid transparent;
+  }
+  .filter-btn.active, .filter-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 180px;
+    gap: 4px;
+  }
+  .portfolio-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end;
+    transition: border-color 0.3s;
+  }
+  .portfolio-item:hover { border-color: var(--accent); }
+  .portfolio-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+  .portfolio-item:nth-child(2) { grid-column: span 5; }
+  .portfolio-item:nth-child(3) { grid-column: span 5; }
+  .portfolio-item:nth-child(4) { grid-column: span 5; grid-row: span 2; }
+  .portfolio-item:nth-child(5) { grid-column: span 7; }
+  .portfolio-item:nth-child(6) { grid-column: span 7; }
+
+  .portfolio-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .portfolio-bg-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; font-weight: 300; color: transparent;
+    -webkit-text-stroke: 1px var(--border2);
+    user-select: none; white-space: nowrap;
+    transition: transform 0.6s ease;
+  }
+  .portfolio-item:hover .portfolio-bg-text { transform: scale(1.08); }
+
+  .portfolio-info {
+    position: relative; z-index: 2;
+    padding: 1.25rem;
+    background: linear-gradient(to top, rgba(13,13,15,0.95) 0%, transparent 100%);
+    width: 100%;
+  }
+  .portfolio-cat {
+    font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 0.25rem;
+  }
+  .portfolio-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 300; color: var(--white);
+  }
+
+  .portfolio-placeholder { color: var(--bg3); }
+  /* Pattern fills */
+  .p1 { background: linear-gradient(135deg, #1a1a20 0%, #0f1118 100%); }
+  .p2 { background: linear-gradient(45deg, #131317 0%, #1e1a0f 100%); }
+  .p3 { background: radial-gradient(ellipse at 30% 70%, rgba(200,169,110,0.06) 0%, #0d0d0f 70%); }
+  .p4 { background: linear-gradient(180deg, #1a1822 0%, #0e0d11 100%); }
+  .p5 { background: linear-gradient(135deg, #0f1115 0%, #1a1418 100%); }
+  .p6 { background: radial-gradient(ellipse at 70% 30%, rgba(200,169,110,0.04) 0%, #0d0d0f 60%); }
+
+  /* Contact */
+  #contact {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+  }
+  .contact-left {}
+  .contact-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--muted); margin-top: 1rem; margin-bottom: 3rem;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item {}
+  .contact-item-label {
+    font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); display: block; margin-bottom: 0.35rem;
+  }
+  .contact-item-val {
+    font-size: 0.75rem; color: var(--text); letter-spacing: 0.05em;
+  }
+  .contact-right { display: flex; flex-direction: column; justify-content: center; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+  .form-group label {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); padding: 0.85rem 1rem;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 300;
+    outline: none; transition: border-color 0.3s; resize: none;
+    letter-spacing: 0.04em; appearance: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--accent);
+  }
+  .form-group select option { background: var(--bg3); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .submit-btn {
+    background: none; border: 1px solid var(--accent);
+    color: var(--accent); padding: 1rem 2rem;
+    font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    cursor: none; transition: background 0.3s, color 0.3s;
+    align-self: flex-start;
+  }
+  .submit-btn:hover { background: var(--accent); color: var(--bg); }
+
+  /* Privacy Policy */
+  #privacy {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    max-width: 780px;
+  }
+  .privacy-content { margin-top: 3rem; }
+  .privacy-section { margin-bottom: 3rem; }
+  .privacy-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 300; color: var(--white);
+    margin-bottom: 1rem;
+  }
+  .privacy-section p {
+    font-size: 0.72rem; line-height: 2; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; font-weight: 300;
+    color: var(--white); letter-spacing: 0.15em;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-copy {
+    font-size: 0.58rem; letter-spacing: 0.15em; color: var(--muted);
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* Animations */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* Page sections toggle */
+  .page { display: block; }
+
+  @media (max-width: 900px) {
+    #home { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    #about { grid-template-columns: 1fr; }
+    #contact { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 200px; }
+    .portfolio-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    .services-strip { padding: 1.2rem 1.5rem; }
+    .hero-left { padding: 8rem 1.5rem 4rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="mainNav">
+  <a href="#home" class="nav-logo">Megapixel<span>lk</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Creative Design Studio</div>
+    <h1 class="hero-title">
+      Craft that<br>
+      <em>speaks</em><br>
+      volumes.
+    </h1>
+    <p class="hero-desc">
+      Visual storytelling through design — logos, flyers, photo editing, AI-generated imagery, motion graphics, and video. Every pixel intentional.
+    </p>
+    <a href="#portfolio" class="hero-cta">View Work</a>
+    <div class="hero-scroll-hint">Scroll</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-grid-art" id="heroGrid"></div>
+    </div>
+    <div class="hero-big-text">MP</div>
+  </div>
+</section>
+
+<!-- SERVICES STRIP -->
+<div class="services-strip">
+  <span>Logo Design</span><span class="dot">·</span>
+  <span>Brand Identity</span><span class="dot">·</span>
+  <span>Flyer Design</span><span class="dot">·</span>
+  <span>Photo Editing</span><span class="dot">·</span>
+  <span>AI Image Generation</span><span class="dot">·</span>
+  <span>Video Editing</span><span class="dot">·</span>
+  <span>Motion Graphics</span><span class="dot">·</span>
+  <span>Print & Digital</span>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-left fade-up">
+    <div class="section-label">About</div>
+    <h2>Design with<br><em>purpose</em></h2>
+    <p class="about-body">
+      Megapixellk is a creative design studio based in Sri Lanka, specialising in visual communication that blends aesthetic precision with strategic intent. From brand identities to immersive motion work, every project begins with understanding your story — and ends with an image that tells it better than words.
+    </p>
+    <p class="about-body">
+      With expertise across print, digital, AI-powered imagery, and video, we bridge the traditional and the emerging — crafting visuals that feel both timeless and contemporary.
+    </p>
+    <div class="about-stats">
+      <div class="stat">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Years Active</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">200+</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Iterations</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-right fade-up">
+    <div class="section-label">Expertise</div>
+    <ul class="skills-list">
+      <li><span>Logo & Brand Identity</span><span class="skill-icon">01</span></li>
+      <li><span>Flyer & Print Design</span><span class="skill-icon">02</span></li>
+      <li><span>Photo Editing & Retouching</span><span class="skill-icon">03</span></li>
+      <li><span>AI Image Generation</span><span class="skill-icon">04</span></li>
+      <li><span>Video Editing</span><span class="skill-icon">05</span></li>
+      <li><span>Motion Graphics</span><span class="skill-icon">06</span></li>
+      <li><span>Social Media Visuals</span><span class="skill-icon">07</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header fade-up">
+    <div>
+      <div class="section-label">Portfolio</div>
+      <h2>Selected<br><em>Work</em></h2>
+    </div>
+    <div class="portfolio-filter">
+      <button class="filter-btn active" onclick="filterPortfolio('all', this)">All</button>
+      <button class="filter-btn" onclick="filterPortfolio('brand', this)">Branding</button>
+      <button class="filter-btn" onclick="filterPortfolio('photo', this)">Photo</button>
+      <button class="filter-btn" onclick="filterPortfolio('motion', this)">Motion</button>
+    </div>
+  </div>
+  <div class="portfolio-grid" id="portfolioGrid">
+    <div class="portfolio-item p1 fade-up" data-cat="brand">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">Brand</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">Brand Identity</span>
+        <div class="portfolio-name">The Noir Collective</div>
+      </div>
+    </div>
+    <div class="portfolio-item p2 fade-up" data-cat="photo">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">Lens</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">Photo Edit</span>
+        <div class="portfolio-name">Dusk Portrait Series</div>
+      </div>
+    </div>
+    <div class="portfolio-item p3 fade-up" data-cat="brand">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">Print</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">Flyer Design</span>
+        <div class="portfolio-name">Frequency Event</div>
+      </div>
+    </div>
+    <div class="portfolio-item p4 fade-up" data-cat="motion">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">Move</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">Motion Graphics</span>
+        <div class="portfolio-name">Kinetic Titles</div>
+      </div>
+    </div>
+    <div class="portfolio-item p5 fade-up" data-cat="photo">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">AI</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">AI Image Gen</span>
+        <div class="portfolio-name">Dreamscape Vol.1</div>
+      </div>
+    </div>
+    <div class="portfolio-item p6 fade-up" data-cat="motion">
+      <div class="portfolio-bg"><div class="portfolio-bg-text">Film</div></div>
+      <div class="portfolio-info">
+        <span class="portfolio-cat">Video Edit</span>
+        <div class="portfolio-name">Cascade Showreel</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left fade-up">
+    <div class="section-label">Contact</div>
+    <h2>Let's build<br>something<br><em>together.</em></h2>
+    <p class="contact-tagline">— every great project starts with a conversation</p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <span class="contact-item-label">Email</span>
+        <span class="contact-item-val">hello@megapixellk.com</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Based In</span>
+        <span class="contact-item-val">Sri Lanka · Available Worldwide</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Response Time</span>
+        <span class="contact-item-val">Within 24 hours</span>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right fade-up">
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">Service Needed</label>
+        <select id="service">
+          <option value="">Select a service...</option>
+          <option>Logo & Brand Identity</option>
+          <option>Flyer / Print Design</option>
+          <option>Photo Editing</option>
+          <option>AI Image Generation</option>
+          <option>Video Editing</option>
+          <option>Motion Graphics</option>
+          <option>Other / Multiple</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell me about your project</label>
+        <textarea id="message" rows="5" placeholder="Brief description, timeline, references..."></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- PRIVACY POLICY -->
+<section id="privacy">
+  <div class="section-label">Legal</div>
+  <h2>Privacy<br><em>Policy</em></h2>
+  <div class="privacy-content">
+    <div class="privacy-section">
+      <p style="font-size:0.62rem;color:var(--muted);letter-spacing:0.1em;">Last updated: May 2025</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Information We Collect</h3>
+      <p>When you contact us through this website, we collect only the information you voluntarily provide — your name, email address, and project details. We do not collect any information automatically beyond standard server logs.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>How We Use Your Information</h3>
+      <p>Information you provide is used solely to respond to your enquiry and, if agreed upon, to facilitate design projects. We do not use your data for marketing, profiling, or any purpose beyond direct communication with you.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Data Sharing</h3>
+      <p>We do not sell, trade, or share your personal information with third parties. Your data remains confidential and is only accessible to Megapixellk for the purposes stated above.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Data Retention</h3>
+      <p>We retain contact information only for as long as necessary to complete your project and any follow-up communication. You may request deletion of your data at any time by contacting us directly.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Cookies</h3>
+      <p>This website does not use tracking cookies or third-party analytics. Any cookies present are strictly necessary for basic site functionality.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Your Rights</h3>
+      <p>You have the right to access, correct, or delete any personal information we hold about you. To exercise these rights, please contact us at hello@megapixellk.com and we will respond within 7 business days.</p>
+    </div>
+    <div class="privacy-section">
+      <h3>Contact</h3>
+      <p>For any privacy-related questions or concerns, reach us at hello@megapixellk.com</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Megapixel<span>lk</span></div>
+  <div class="footer-copy">© 2025 Megapixellk. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#portfolio">Work</a>
+    <a href="#contact">Contact</a>
+    <a href="#privacy">Privacy</a>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a,button,.portfolio-item,.skills-list li').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.classList.add('expanded'));
+    el.addEventListener('mouseleave', () => ring.classList.remove('expanded'));
+  });
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Hero grid art
+  const grid = document.getElementById('heroGrid');
+  for(let i = 0; i < 48; i++) {
+    const d = document.createElement('div');
+    d.style.animationDelay = (Math.random() * 5) + 's';
+    d.style.animationDuration = (3 + Math.random() * 3) + 's';
+    grid.appendChild(d);
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if(e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 120;
+    observer.observe(el);
+  });
+
+  // Portfolio filter
+  function filterPortfolio(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-item').forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat;
+      item.style.opacity = show ? '1' : '0.2';
+      item.style.transition = 'opacity 0.4s';
+    });
+  }
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.submit-btn');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.borderColor = 'var(--accent)';
+    btn.style.background = 'rgba(200,169,110,0.1)';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
+  }
+
+  // Smooth nav scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if(target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
