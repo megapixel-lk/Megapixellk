@@ -872,7 +872,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     card.className = 'hi-card ' + item.bg;
     card.onclick = () => openProject(item.id);
     card.innerHTML = `
-      <div class="hi-card-bg"><div class="hi-bg-text">${item.label}</div></div>
+      <div class="hi-card-bg">${item.img ? `<img src="${item.img}" alt="${item.name}">` : `<div class="hi-bg-text">${item.label}</div>`}</div>
       <div class="hi-arrow">↗</div>
       <div class="hi-info">
         <span class="hi-cat">${item.cat}</span>
