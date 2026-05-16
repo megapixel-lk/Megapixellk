@@ -130,6 +130,7 @@ h2 em { font-style:italic; color:var(--accent); }
 .filter-btn.active,.filter-btn:hover { color:var(--accent); border-color:var(--accent); }
 .portfolio-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:180px; gap:4px; }
 .portfolio-item { background:var(--bg3); border:1px solid var(--border); position:relative; overflow:hidden; display:flex; align-items:flex-end; transition:border-color 0.3s; }
+.portfolio-item { cursor: pointer; }
 .portfolio-item:hover { border-color:var(--accent); }
 .portfolio-item:nth-child(1) { grid-column:span 7; grid-row:span 2; }
 .portfolio-item:nth-child(2) { grid-column:span 5; }
@@ -210,6 +211,193 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
 /* FADE UP */
 .fade-up { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease,transform 0.8s ease; }
 .fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* PROJECT PAGE OVERLAY */
+.project-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: var(--bg);
+  overflow-y: auto;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.project-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.project-overlay-inner {
+  min-height: 100vh;
+  padding: 0 0 6rem;
+}
+
+/* Project nav bar */
+.project-nav {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 3rem;
+  background: rgba(13,13,15,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.project-back {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted); background: none; border: none; cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  transition: color 0.3s;
+}
+.project-back:hover { color: var(--accent); }
+.project-nav-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 300; color: var(--white); letter-spacing: 0.1em;
+}
+.project-nav-cat {
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+}
+
+/* Project hero */
+.project-hero {
+  padding: 5rem 3rem 3rem;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+}
+.project-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300;
+  color: var(--white); line-height: 1; margin-bottom: 1.5rem;
+}
+.project-hero-title em { font-style: italic; color: var(--accent); }
+.project-hero-desc {
+  font-size: 0.72rem; line-height: 2; color: var(--muted); letter-spacing: 0.05em;
+}
+.project-meta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.project-meta-item {
+  background: var(--bg2); padding: 1.25rem;
+}
+.project-meta-label {
+  font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--accent); display: block; margin-bottom: 0.4rem;
+}
+.project-meta-val {
+  font-size: 0.7rem; color: var(--text); letter-spacing: 0.05em;
+}
+
+/* AUTO-SCROLL GALLERY */
+.gallery-section {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.gallery-label {
+  padding: 0 3rem;
+  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.gallery-label::before { content:''; display:block; width:30px; height:1px; background:var(--accent); }
+
+.gallery-track-wrap {
+  position: relative;
+  overflow: hidden;
+  /* fade edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.gallery-track {
+  display: flex; gap: 12px;
+  width: max-content;
+  animation: gallery-scroll 30s linear infinite;
+  will-change: transform;
+}
+.gallery-track:hover { animation-play-state: paused; }
+.gallery-track-wrap.reverse .gallery-track {
+  animation-direction: reverse;
+}
+
+@keyframes gallery-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.gallery-slide {
+  flex-shrink: 0;
+  width: 340px; height: 220px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.gallery-slide:hover { border-color: var(--accent); }
+.gallery-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.gallery-slide:hover img { transform: scale(1.06); }
+
+/* Placeholder tile when no image */
+.gallery-slide-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.5rem;
+}
+.gallery-slide-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 300; color: transparent;
+  -webkit-text-stroke: 1px var(--border2);
+}
+.gallery-slide-note {
+  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+}
+
+/* Project description below gallery */
+.project-body {
+  padding: 4rem 3rem;
+  display: grid; grid-template-columns: 2fr 1fr; gap: 5rem;
+  border-bottom: 1px solid var(--border);
+}
+.project-body-text {
+  font-size: 0.75rem; line-height: 2.1; color: var(--muted); letter-spacing: 0.04em;
+}
+.project-body-text p { margin-bottom: 1.5rem; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+.project-tag {
+  font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--border); padding: 0.35rem 0.75rem;
+  transition: border-color 0.3s, color 0.3s;
+}
+.project-tag:hover { border-color: var(--accent); color: var(--accent); }
+.project-sidebar {}
+.project-sidebar-section { margin-bottom: 2.5rem; }
+.project-sidebar-label {
+  font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.75rem; display: block;
+}
+.project-sidebar-val {
+  font-size: 0.7rem; color: var(--text); line-height: 1.8; letter-spacing: 0.05em;
+}
+
+/* Project footer CTA */
+.project-cta-bar {
+  padding: 4rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.project-cta-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; color: var(--white);
+}
+.project-cta-text em { font-style: italic; color: var(--accent); }
+.project-cta-actions { display: flex; gap: 1rem; }
+
+@media(max-width:900px){
+  .project-hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 2rem; }
+  .project-nav { padding: 1.2rem 1.5rem; }
+  .project-body { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .project-cta-bar { flex-direction: column; gap: 2rem; padding: 3rem 1.5rem; text-align: center; }
+  .gallery-slide { width: 260px; height: 180px; }
+  .gallery-label { padding: 0 1.5rem; }
+}
 
 @media(max-width:900px){
   #home { grid-template-columns:1fr; }
@@ -395,49 +583,43 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
       Add to CSS: .portfolio-bg img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; filter:brightness(0.7); }
                   .portfolio-item:hover .portfolio-bg img { transform:scale(1.08); }
     -->
-    <div class="portfolio-item p1 fade-up" data-cat="brand">
+    <div class="portfolio-item p1 fade-up" data-cat="brand" onclick="openProject('noir')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">Brand</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">Brand Identity</span>
         <div class="portfolio-name">The Noir Collective</div>
       </div>
     </div>
-    <div class="portfolio-item p2 fade-up" data-cat="photo">
+    <div class="portfolio-item p2 fade-up" data-cat="photo" onclick="openProject('dusk')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">Lens</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">Photo Edit</span>
         <div class="portfolio-name">Dusk Portrait Series</div>
       </div>
     </div>
-    <div class="portfolio-item p3 fade-up" data-cat="brand">
+    <div class="portfolio-item p3 fade-up" data-cat="brand" onclick="openProject('frequency')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">Print</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">Flyer Design</span>
         <div class="portfolio-name">Frequency Event</div>
       </div>
     </div>
-    <div class="portfolio-item p4 fade-up" data-cat="motion">
+    <div class="portfolio-item p4 fade-up" data-cat="motion" onclick="openProject('kinetic')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">Move</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">Motion Graphics</span>
         <div class="portfolio-name">Kinetic Titles</div>
       </div>
     </div>
-    <div class="portfolio-item p5 fade-up" data-cat="photo">
+    <div class="portfolio-item p5 fade-up" data-cat="photo" onclick="openProject('dreamscape')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">AI</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">AI Image Gen</span>
         <div class="portfolio-name">Dreamscape Vol.1</div>
       </div>
     </div>
-    <div class="portfolio-item p6 fade-up" data-cat="motion">
+    <div class="portfolio-item p6 fade-up" data-cat="motion" onclick="openProject('cascade')">
       <div class="portfolio-bg"><div class="portfolio-bg-text">Film</div></div>
-      <a href="#" class="portfolio-link">↗</a>
       <div class="portfolio-info">
         <span class="portfolio-cat">Video Edit</span>
         <div class="portfolio-name">Cascade Showreel</div>
@@ -494,7 +676,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     <div class="contact-details">
       <div class="contact-item">
         <span class="contact-item-label">Email</span>
-        <span class="contact-item-val">hello@megapixellk.com</span>
+        <span class="contact-item-val">Use the form or WhatsApp →</span>
       </div>
       <div class="contact-item">
         <span class="contact-item-label">WhatsApp</span>
@@ -523,6 +705,8 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
       4. Remove the onsubmit handler once Formspree is active
     -->
     <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="_replyto" value="megapixellk@gmail.com">
+      <input type="hidden" name="_subject" value="New project inquiry — Megapixellk">
       <div class="form-row">
         <div class="form-group">
           <label for="name">Name</label>
@@ -586,14 +770,57 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     </div>
     <div class="privacy-section">
       <h3>Your Rights</h3>
-      <p>You have the right to access, correct, or delete any personal information we hold about you. To exercise these rights, please contact us at hello@megapixellk.com and we will respond within 7 business days.</p>
+      <p>You have the right to access, correct, or delete any personal information we hold about you. To exercise these rights, please contact us at megapixellk@gmail.com and we will respond within 7 business days.</p>
     </div>
     <div class="privacy-section">
       <h3>Contact</h3>
-      <p>For any privacy-related questions or concerns, reach us at hello@megapixellk.com</p>
+      <p>For any privacy-related questions or concerns, reach us at megapixellk@gmail.com</p>
     </div>
   </div>
 </section>
+
+<!-- PROJECT OVERLAY PAGE -->
+<div class="project-overlay" id="projectOverlay">
+  <div class="project-overlay-inner">
+    <div class="project-nav">
+      <button class="project-back" onclick="closeProject()">← Back to Work</button>
+      <div id="projectNavTitle" class="project-nav-title"></div>
+      <div id="projectNavCat" class="project-nav-cat"></div>
+    </div>
+    <div class="project-hero">
+      <div>
+        <div id="projectTitle" class="project-hero-title"></div>
+        <p id="projectDesc" class="project-hero-desc"></p>
+      </div>
+      <div id="projectMeta" class="project-meta"></div>
+    </div>
+    <div class="gallery-section">
+      <div class="gallery-label">Gallery</div>
+      <div class="gallery-track-wrap" id="galleryRow1">
+        <div class="gallery-track" id="galleryTrack1"></div>
+      </div>
+    </div>
+    <div class="gallery-section" style="padding-top:1rem;">
+      <div class="gallery-track-wrap reverse">
+        <div class="gallery-track" id="galleryTrack2"></div>
+      </div>
+    </div>
+    <div class="project-body">
+      <div>
+        <div id="projectBody" class="project-body-text"></div>
+        <div id="projectTags" class="project-tags"></div>
+      </div>
+      <div class="project-sidebar" id="projectSidebar"></div>
+    </div>
+    <div class="project-cta-bar">
+      <div class="project-cta-text">Like what you see?<br>Let's build something <em>together.</em></div>
+      <div class="project-cta-actions">
+        <a href="https://wa.me/94779739163" class="hero-cta hero-cta-wa" target="_blank">WhatsApp Us</a>
+        <a href="#contact" class="hero-cta" onclick="closeProject()">Start a Project</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -684,5 +911,178 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     });
   });
 </script>
+
+  // ── PROJECT DATA ──────────────────────────────────────────────
+  const PROJECTS = {
+    noir: {
+      title: 'The Noir<br><em>Collective</em>',
+      cat: 'Brand Identity',
+      desc: "A complete visual identity for a luxury lifestyle collective — wordmark, colour system, typography, stationery, and brand guidelines delivered across print and digital.",
+      meta: [
+        { label: 'Client', val: 'The Noir Collective' },
+        { label: 'Year', val: '2024' },
+        { label: 'Deliverables', val: 'Logo, Brand System, Stationery' },
+        { label: 'Timeline', val: '3 weeks' },
+      ],
+      body: '<p>The challenge was to distill a multi-faceted lifestyle brand into a single, ownable mark. The resulting wordmark draws on architectural geometry — precise, quiet, unmistakable.</p><p>The full system spans primary and secondary lockups, a curated colour palette, typographic hierarchy, business cards, letterhead, and a 24-page brand guideline document.</p>',
+      tags: ['Logo Design','Typography','Brand Guidelines','Stationery','Print'],
+      sidebar: [
+        { label: 'Approach', val: 'Identity-first. Started with brand strategy, then translated values into visual language.' },
+        { label: 'Tools', val: 'Adobe Illustrator, InDesign' },
+        { label: 'Result', val: 'Zero revisions. Client launched within 2 weeks of brief.' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+    dusk: {
+      title: 'Dusk Portrait<br><em>Series</em>',
+      cat: 'Photo Editing',
+      desc: "A series of editorial portrait retouches — skin, light, and atmosphere refined to a cinematic standard for a local fashion photographer's portfolio.",
+      meta: [
+        { label: 'Client', val: 'Studio Dusk' },
+        { label: 'Year', val: '2024' },
+        { label: 'Deliverables', val: '24 retouched images' },
+        { label: 'Timeline', val: '1 week' },
+      ],
+      body: '<p>Working from RAW files, each image was treated for skin retouching, colour grading, and background separation. The goal: every shot feels like a magazine spread.</p><p>A consistent LUT was developed across the series to ensure visual cohesion when published as a collection.</p>',
+      tags: ['Photo Retouching','Colour Grading','Editorial','Lightroom','Photoshop'],
+      sidebar: [
+        { label: 'Technique', val: 'Frequency separation retouching, dodge & burn, custom LUT development.' },
+        { label: 'Tools', val: 'Adobe Photoshop, Lightroom' },
+        { label: 'Volume', val: '24 hero images delivered' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+    frequency: {
+      title: 'Frequency<br><em>Event</em>',
+      cat: 'Flyer Design',
+      desc: "A complete print and digital collateral suite for a multi-day music event — posters, social assets, wristbands, and stage backdrops.",
+      meta: [
+        { label: 'Client', val: 'Frequency Events' },
+        { label: 'Year', val: '2023' },
+        { label: 'Deliverables', val: 'Print + Digital Suite' },
+        { label: 'Timeline', val: '10 days' },
+      ],
+      body: '<p>The brief called for energy without chaos. A dark base with aggressive neon accents — built to work at A1 poster scale and as a 1080x1080 Instagram tile simultaneously.</p><p>All assets were delivered print-ready (CMYK, 300dpi) and screen-optimised, with source files handed over for future use.</p>',
+      tags: ['Flyer Design','Event Branding','Print','Social Media','CMYK'],
+      sidebar: [
+        { label: 'Scale', val: 'A1 poster · A5 flyer · Story · Feed · Wristband · Backdrop' },
+        { label: 'Tools', val: 'Adobe Illustrator, Photoshop' },
+        { label: 'Print Specs', val: 'CMYK 300dpi, bleed & trim marks included' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+    kinetic: {
+      title: 'Kinetic<br><em>Titles</em>',
+      cat: 'Motion Graphics',
+      desc: "A set of animated lower-thirds, title cards, and transitions for a YouTube creator — premium motion at any playback size.",
+      meta: [
+        { label: 'Client', val: 'Creator — Confidential' },
+        { label: 'Year', val: '2024' },
+        { label: 'Deliverables', val: 'Motion pack — 20 elements' },
+        { label: 'Timeline', val: '2 weeks' },
+      ],
+      body: '<p>Typography-driven motion — no gimmicks. Each element was built with clean easing curves in After Effects and exported as both ProRes Alpha and H.264 for flexibility.</p><p>The pack includes intro animations, lower-thirds in 3 variants, subscribe reminders, and an end-screen template, all fully editable via Essential Graphics.</p>',
+      tags: ['Motion Graphics','After Effects','Typography','YouTube','ProRes'],
+      sidebar: [
+        { label: 'Format', val: 'ProRes 4444 + H.264 · 1920x1080 · 25fps' },
+        { label: 'Tools', val: 'After Effects, Illustrator' },
+        { label: 'Extras', val: 'Essential Graphics panel for easy text edits' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+    dreamscape: {
+      title: 'Dreamscape<br><em>Vol. 1</em>',
+      cat: 'AI Image Generation',
+      desc: "A curated series of AI-generated concept visuals for a fashion editorial — pushing boundaries that traditional photography budgets could not reach.",
+      meta: [
+        { label: 'Client', val: 'Editorial — Confidential' },
+        { label: 'Year', val: '2024' },
+        { label: 'Deliverables', val: '12 hero visuals' },
+        { label: 'Timeline', val: '5 days' },
+      ],
+      body: '<p>Each image started with a detailed prompt architecture, then went through multiple generation rounds, manual selection, and post-processing in Photoshop to achieve print-ready quality.</p><p>The final 12 images are indistinguishable from high-end studio photography — produced at a fraction of the cost.</p>',
+      tags: ['AI Generation','Midjourney','Photoshop','Editorial','Concept'],
+      sidebar: [
+        { label: 'Process', val: 'Prompt engineering → generation → curation → Photoshop finishing' },
+        { label: 'Output', val: '4K · print-ready · colour graded' },
+        { label: 'Saving', val: 'Est. 80% cost vs traditional shoot' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+    cascade: {
+      title: 'Cascade<br><em>Showreel</em>',
+      cat: 'Video Editing',
+      desc: "A 90-second brand showreel edited from raw footage — paced to music, colour graded, and finished with motion graphics.",
+      meta: [
+        { label: 'Client', val: 'Cascade Productions' },
+        { label: 'Year', val: '2024' },
+        { label: 'Deliverables', val: '90s showreel + 30s cut' },
+        { label: 'Timeline', val: '1 week' },
+      ],
+      body: '<p>Working from 3 hours of raw footage, the edit was built around a music track — every cut landing on the beat, every transition purposeful. Colour grade matched to a warm, cinematic look.</p><p>A 30-second vertical cut was also delivered for Instagram Reels, re-timed and re-formatted from the same timeline.</p>',
+      tags: ['Video Editing','Colour Grade','Motion Graphics','Premiere Pro','Reels'],
+      sidebar: [
+        { label: 'Output', val: '4K H.264 · 16:9 master + 9:16 vertical cut' },
+        { label: 'Tools', val: 'Premiere Pro, After Effects, DaVinci Resolve' },
+        { label: 'Music', val: 'Licensed track — sync rights cleared' },
+      ],
+      images: [],
+      placeholderCount: 8,
+    },
+  };
+
+  function buildGalleryTrack(trackEl, images, placeholderCount, startIndex) {
+    const items = images.length > 0 ? images : Array.from({length: placeholderCount}, () => null);
+    const doubled = [...items, ...items];
+    trackEl.innerHTML = '';
+    doubled.forEach((src, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'gallery-slide';
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src; img.alt = ''; img.loading = 'lazy';
+        slide.appendChild(img);
+      } else {
+        const num = String((i % items.length) + startIndex).padStart(2,'0');
+        slide.innerHTML = '<div class="gallery-slide-placeholder"><div class="gallery-slide-num">' + num + '</div><div class="gallery-slide-note">Add image here</div></div>';
+      }
+      trackEl.appendChild(slide);
+    });
+  }
+
+  function openProject(id) {
+    const p = PROJECTS[id];
+    if (!p) return;
+    document.getElementById('projectNavTitle').textContent = p.title.replace(/<[^>]+>/g,'');
+    document.getElementById('projectNavCat').textContent = p.cat;
+    document.getElementById('projectTitle').innerHTML = p.title;
+    document.getElementById('projectDesc').textContent = p.desc;
+    document.getElementById('projectMeta').innerHTML = p.meta.map(m =>
+      '<div class="project-meta-item"><span class="project-meta-label">' + m.label + '</span><span class="project-meta-val">' + m.val + '</span></div>'
+    ).join('');
+    buildGalleryTrack(document.getElementById('galleryTrack1'), p.images, p.placeholderCount, 1);
+    buildGalleryTrack(document.getElementById('galleryTrack2'), p.images, p.placeholderCount, Math.ceil(p.placeholderCount/2)+1);
+    document.getElementById('projectBody').innerHTML = p.body;
+    document.getElementById('projectTags').innerHTML = p.tags.map(t => '<span class="project-tag">' + t + '</span>').join('');
+    document.getElementById('projectSidebar').innerHTML = p.sidebar.map(s =>
+      '<div class="project-sidebar-section"><span class="project-sidebar-label">' + s.label + '</span><div class="project-sidebar-val">' + s.val + '</div></div>'
+    ).join('');
+    const overlay = document.getElementById('projectOverlay');
+    overlay.classList.add('open');
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProject() {
+    document.getElementById('projectOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
 </body>
 </html>
