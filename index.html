@@ -123,31 +123,65 @@ h2 em { font-style:italic; color:var(--accent); }
 .client-logo-item:hover { opacity:1; color:var(--accent); }
 
 /* PORTFOLIO */
-#portfolio { background:var(--bg); }
+#portfolio { background:var(--bg); overflow:hidden; }
 .portfolio-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
-.portfolio-filter { display:flex; gap:1.5rem; }
-.filter-btn { background:none; border:none; cursor:pointer; font-family:'DM Mono',monospace; font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); transition:color 0.3s; padding:0.3rem 0; border-bottom:1px solid transparent; }
-.filter-btn.active,.filter-btn:hover { color:var(--accent); border-color:var(--accent); }
-.portfolio-grid { display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:180px; gap:4px; }
-.portfolio-item { background:var(--bg3); border:1px solid var(--border); position:relative; overflow:hidden; display:flex; align-items:flex-end; transition:border-color 0.3s; }
-.portfolio-item { cursor: pointer; }
-.portfolio-item:hover { border-color:var(--accent); }
-.portfolio-item:nth-child(1) { grid-column:span 7; grid-row:span 2; }
-.portfolio-item:nth-child(2) { grid-column:span 5; }
-.portfolio-item:nth-child(3) { grid-column:span 5; }
-.portfolio-item:nth-child(4) { grid-column:span 5; grid-row:span 2; }
-.portfolio-item:nth-child(5) { grid-column:span 7; }
-.portfolio-item:nth-child(6) { grid-column:span 7; }
-.portfolio-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-/* When you add real images: .portfolio-bg img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; filter:brightness(0.7); } */
-/* .portfolio-item:hover .portfolio-bg img { transform:scale(1.08); } */
-.portfolio-bg-text { font-family:'Cormorant Garamond',serif; font-size:6rem; font-weight:300; color:transparent; -webkit-text-stroke:1px var(--border2); user-select:none; white-space:nowrap; transition:transform 0.6s; }
-.portfolio-item:hover .portfolio-bg-text { transform:scale(1.08); }
-.portfolio-info { position:relative; z-index:2; padding:1.25rem; background:linear-gradient(to top,rgba(13,13,15,0.95) 0%,transparent 100%); width:100%; }
-.portfolio-cat { font-size:0.55rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:0.25rem; }
-.portfolio-name { font-family:'Cormorant Garamond',serif; font-size:1.1rem; font-weight:300; color:var(--white); }
-.portfolio-link { position:absolute; top:1rem; right:1rem; z-index:3; width:36px; height:36px; border:1px solid rgba(200,169,110,0.4); display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:0.7rem; opacity:0; transition:opacity 0.3s; text-decoration:none; }
-.portfolio-item:hover .portfolio-link { opacity:1; }
+
+/* HIGHLIGHT REEL — horizontal scroll carousel */
+.highlight-reel { position:relative; overflow:hidden; margin:0 -3rem; }
+.highlight-reel::before,
+.highlight-reel::after {
+  content:''; position:absolute; top:0; bottom:0; width:120px; z-index:5; pointer-events:none;
+}
+.highlight-reel::before { left:0; background:linear-gradient(to right, var(--bg), transparent); }
+.highlight-reel::after  { right:0; background:linear-gradient(to left,  var(--bg), transparent); }
+
+.highlight-track-wrap { display:flex; flex-direction:column; gap:6px; padding:0 0 6px; }
+
+.highlight-track {
+  display:flex; gap:6px; width:max-content;
+  animation: scroll-left 38s linear infinite;
+}
+.highlight-track.reverse {
+  animation: scroll-right 44s linear infinite;
+}
+@keyframes scroll-left  { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes scroll-right { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+
+.highlight-track:hover,
+.highlight-track.reverse:hover { animation-play-state:paused; }
+
+.hi-card {
+  width:340px; height:220px; flex-shrink:0;
+  position:relative; overflow:hidden; cursor:pointer;
+  border:1px solid var(--border); transition:border-color 0.3s;
+  display:flex; align-items:flex-end;
+}
+.hi-card:hover { border-color:var(--accent); }
+.hi-card-bg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.hi-card-bg img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; filter:brightness(0.65); }
+.hi-card:hover .hi-card-bg img { transform:scale(1.07); }
+.hi-bg-text {
+  font-family:'Cormorant Garamond',serif; font-size:5.5rem; font-weight:300;
+  color:transparent; -webkit-text-stroke:1px var(--border2); user-select:none;
+  white-space:nowrap; transition:transform 0.6s;
+}
+.hi-card:hover .hi-bg-text { transform:scale(1.08); }
+.hi-info {
+  position:relative; z-index:2; padding:1rem 1.25rem;
+  background:linear-gradient(to top,rgba(13,13,15,0.96) 0%,transparent 100%);
+  width:100%;
+}
+.hi-cat { font-size:0.52rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:0.2rem; }
+.hi-name { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:300; color:var(--white); }
+.hi-arrow {
+  position:absolute; top:0.75rem; right:0.75rem; z-index:3;
+  width:30px; height:30px; border:1px solid rgba(200,169,110,0.4);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--accent); font-size:0.65rem;
+  opacity:0; transition:opacity 0.3s;
+}
+.hi-card:hover .hi-arrow { opacity:1; }
+
 .p1 { background:linear-gradient(135deg,#1a1a20 0%,#0f1118 100%); }
 .p2 { background:linear-gradient(45deg,#131317 0%,#1e1a0f 100%); }
 .p3 { background:radial-gradient(ellipse at 30% 70%,rgba(200,169,110,0.06) 0%,#0d0d0f 70%); }
@@ -177,20 +211,31 @@ h2 em { font-style:italic; color:var(--accent); }
 .contact-details { display:flex; flex-direction:column; gap:1.5rem; }
 .contact-item-label { font-size:0.58rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:0.35rem; }
 .contact-item-val { font-size:0.75rem; color:var(--text); letter-spacing:0.05em; }
+.contact-right { display:flex; flex-direction:column; justify-content:center; gap:1rem; }
+.contact-right-label { font-size:0.6rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--muted); margin-bottom:0.5rem; }
+.messenger-btns { display:flex; flex-direction:column; gap:1rem; }
+.msg-btn {
+  display:flex; align-items:center; gap:1rem;
+  padding:1.1rem 1.5rem;
+  text-decoration:none; border:1px solid var(--border);
+  font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase;
+  transition:border-color 0.3s, background 0.3s, transform 0.2s;
+  color:var(--text);
+}
+.msg-btn:hover { transform:translateX(4px); }
+.msg-btn svg { flex-shrink:0; width:22px; height:22px; }
+.msg-btn-wa  { border-color:rgba(37,211,102,0.3); }
+.msg-btn-wa:hover  { background:rgba(37,211,102,0.08); border-color:#25D366; color:#25D366; }
+.msg-btn-fb  { border-color:rgba(0,153,255,0.3); }
+.msg-btn-fb:hover  { background:rgba(0,153,255,0.08); border-color:#0099ff; color:#0099ff; }
+.msg-btn-tg  { border-color:rgba(36,161,222,0.3); }
+.msg-btn-tg:hover  { background:rgba(36,161,222,0.08); border-color:#24a1de; color:#24a1de; }
+.msg-btn-icon { display:flex; align-items:center; justify-content:center; width:22px; height:22px; }
+.msg-btn-text { display:flex; flex-direction:column; gap:0.15rem; }
+.msg-btn-name { font-size:0.7rem; letter-spacing:0.15em; }
+.msg-btn-sub { font-size:0.55rem; color:var(--muted); letter-spacing:0.1em; text-transform:none; }
 .wa-link { display:inline-flex; align-items:center; gap:0.5rem; color:#25D366; text-decoration:none; font-size:0.65rem; letter-spacing:0.15em; margin-top:1rem; padding:0.6rem 1rem; border:1px solid rgba(37,211,102,0.3); transition:background 0.3s; }
 .wa-link:hover { background:rgba(37,211,102,0.1); }
-.contact-right { display:flex; flex-direction:column; justify-content:center; }
-.contact-form { display:flex; flex-direction:column; gap:1.5rem; }
-.form-group { display:flex; flex-direction:column; gap:0.5rem; }
-.form-group label { font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); }
-.form-group input,.form-group textarea,.form-group select { background:var(--bg3); border:1px solid var(--border); color:var(--text); padding:0.85rem 1rem; font-family:'DM Mono',monospace; font-size:0.72rem; font-weight:300; outline:none; transition:border-color 0.3s; resize:none; letter-spacing:0.04em; appearance:none; }
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus { border-color:var(--accent); }
-.form-group select option { background:var(--bg3); }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-.submit-btn { background:none; border:1px solid var(--accent); color:var(--accent); padding:1rem 2rem; font-family:'DM Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; cursor:pointer; transition:background 0.3s,color 0.3s; align-self:flex-start; }
-.submit-btn:hover { background:var(--accent); color:var(--bg); }
-.form-note { font-size:0.58rem; color:var(--muted); letter-spacing:0.1em; }
-.form-note a { color:var(--accent); text-decoration:none; }
 
 /* PRIVACY */
 #privacy { background:var(--bg); border-top:1px solid var(--border); max-width:780px; }
@@ -567,62 +612,17 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
       <div class="section-label">Portfolio</div>
       <h2>Selected<br><em>Work</em></h2>
     </div>
-    <div class="portfolio-filter">
-      <button class="filter-btn active" onclick="filterPortfolio('all',this)">All</button>
-      <button class="filter-btn" onclick="filterPortfolio('brand',this)">Branding</button>
-      <button class="filter-btn" onclick="filterPortfolio('photo',this)">Photo</button>
-      <button class="filter-btn" onclick="filterPortfolio('motion',this)">Motion</button>
-    </div>
+    <p style="font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;align-self:flex-end;">Click any card to explore the project →</p>
   </div>
-  <div class="portfolio-grid" id="portfolioGrid">
-    <!--
-      TO ADD REAL IMAGES, replace each portfolio-bg div like this:
-      <div class="portfolio-bg">
-        <img src="images/project1.jpg" alt="The Noir Collective branding">
+
+  <!-- Row 1 — scrolls left -->
+  <div class="highlight-reel">
+    <div class="highlight-track-wrap">
+      <div class="highlight-track" id="reelTrack1">
+        <!-- cards duplicated via JS -->
       </div>
-      Add to CSS: .portfolio-bg img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s; filter:brightness(0.7); }
-                  .portfolio-item:hover .portfolio-bg img { transform:scale(1.08); }
-    -->
-    <div class="portfolio-item p1 fade-up" data-cat="brand" onclick="openProject('noir')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">Brand</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">Brand Identity</span>
-        <div class="portfolio-name">The Noir Collective</div>
-      </div>
-    </div>
-    <div class="portfolio-item p2 fade-up" data-cat="photo" onclick="openProject('dusk')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">Lens</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">Photo Edit</span>
-        <div class="portfolio-name">Dusk Portrait Series</div>
-      </div>
-    </div>
-    <div class="portfolio-item p3 fade-up" data-cat="brand" onclick="openProject('frequency')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">Print</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">Flyer Design</span>
-        <div class="portfolio-name">Frequency Event</div>
-      </div>
-    </div>
-    <div class="portfolio-item p4 fade-up" data-cat="motion" onclick="openProject('kinetic')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">Move</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">Motion Graphics</span>
-        <div class="portfolio-name">Kinetic Titles</div>
-      </div>
-    </div>
-    <div class="portfolio-item p5 fade-up" data-cat="photo" onclick="openProject('dreamscape')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">AI</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">AI Image Gen</span>
-        <div class="portfolio-name">Dreamscape Vol.1</div>
-      </div>
-    </div>
-    <div class="portfolio-item p6 fade-up" data-cat="motion" onclick="openProject('cascade')">
-      <div class="portfolio-bg"><div class="portfolio-bg-text">Film</div></div>
-      <div class="portfolio-info">
-        <span class="portfolio-cat">Video Edit</span>
-        <div class="portfolio-name">Cascade Showreel</div>
+      <!-- Row 2 — scrolls right -->
+      <div class="highlight-track reverse" id="reelTrack2">
       </div>
     </div>
   </div>
@@ -675,18 +675,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     <p class="contact-tagline">— every great project starts with a conversation</p>
     <div class="contact-details">
       <div class="contact-item">
-        <span class="contact-item-label">Email</span>
-        <span class="contact-item-val">Use the form or WhatsApp →</span>
-      </div>
-      <div class="contact-item">
-        <span class="contact-item-label">WhatsApp</span>
-        <span class="contact-item-val">+94 XX XXX XXXX</span>
-        <a href="https://wa.me/94779739163" class="wa-link" target="_blank">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Message us on WhatsApp
-        </a>
-      </div>
-      <div class="contact-item">
         <span class="contact-item-label">Based In</span>
         <span class="contact-item-val">Sri Lanka · Available Worldwide</span>
       </div>
@@ -694,49 +682,40 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
         <span class="contact-item-label">Response Time</span>
         <span class="contact-item-val">Within 24 hours</span>
       </div>
+      <div class="contact-item">
+        <span class="contact-item-label">Services</span>
+        <span class="contact-item-val">Logo · Branding · Photo · AI · Video · Motion</span>
+      </div>
     </div>
   </div>
   <div class="contact-right fade-up">
-    <!--
-      FORMSPREE SETUP:
-      1. Go to https://formspree.io and create a free account
-      2. Create a new form and get your form ID
-      3. Replace YOUR_FORM_ID below with your actual ID
-      4. Remove the onsubmit handler once Formspree is active
-    -->
-    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm" onsubmit="handleSubmit(event)">
-      <input type="hidden" name="_replyto" value="megapixellk@gmail.com">
-      <input type="hidden" name="_subject" value="New project inquiry — Megapixellk">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" required>
+    <p class="contact-right-label">Reach out on your preferred platform</p>
+    <div class="messenger-btns">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/94779739163" class="msg-btn msg-btn-wa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <div class="msg-btn-text">
+          <span class="msg-btn-name">WhatsApp</span>
+          <span class="msg-btn-sub">+94 77 973 9163 · fastest reply</span>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </a>
+      <!-- Facebook Messenger -->
+      <a href="https://m.me/megapixellk" class="msg-btn msg-btn-fb" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.3 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/></svg>
+        <div class="msg-btn-text">
+          <span class="msg-btn-name">Facebook Messenger</span>
+          <span class="msg-btn-sub">facebook.com/megapixellk</span>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="service">Service Needed</label>
-        <select id="service" name="service">
-          <option value="">Select a service...</option>
-          <option>Logo & Brand Identity</option>
-          <option>Flyer / Print Design</option>
-          <option>Photo Editing</option>
-          <option>AI Image Generation</option>
-          <option>Video Editing</option>
-          <option>Motion Graphics</option>
-          <option>Other / Multiple</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="message">Tell me about your project</label>
-        <textarea id="message" name="message" rows="5" placeholder="Brief description, timeline, references..."></textarea>
-      </div>
-      <p class="form-note">Or skip the form — <a href="https://wa.me/94779739163" target="_blank">message us directly on WhatsApp ↗</a></p>
-      <button type="submit" class="submit-btn" id="submitBtn">Send Message →</button>
-    </form>
+      </a>
+      <!-- Telegram -->
+      <a href="https://t.me/+94779739163" class="msg-btn msg-btn-tg" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <div class="msg-btn-text">
+          <span class="msg-btn-name">Telegram</span>
+          <span class="msg-btn-sub">+94 77 973 9163</span>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -878,29 +857,38 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     observer.observe(el);
   });
 
-  // Portfolio filter
-  function filterPortfolio(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.portfolio-item').forEach(item => {
-      const show = cat==='all' || item.dataset.cat===cat;
-      item.style.opacity = show ? '1' : '0.15';
-      item.style.transition = 'opacity 0.4s';
-    });
+  // ── HIGHLIGHT REEL ──────────────────────────────────────────────
+  const REEL_ITEMS = [
+    { id:'noir',       cat:'Brand Identity',   name:'The Noir Collective', bg:'p1', label:'Brand' },
+    { id:'dusk',       cat:'Photo Edit',       name:'Dusk Portrait Series',bg:'p2', label:'Lens'  },
+    { id:'frequency',  cat:'Flyer Design',     name:'Frequency Event',     bg:'p3', label:'Print' },
+    { id:'kinetic',    cat:'Motion Graphics',  name:'Kinetic Titles',      bg:'p4', label:'Move'  },
+    { id:'dreamscape', cat:'AI Image Gen',     name:'Dreamscape Vol.1',    bg:'p5', label:'AI'    },
+    { id:'cascade',    cat:'Video Edit',       name:'Cascade Showreel',    bg:'p6', label:'Film'  },
+  ];
+
+  function buildReelCard(item) {
+    const card = document.createElement('div');
+    card.className = 'hi-card ' + item.bg;
+    card.onclick = () => openProject(item.id);
+    card.innerHTML = `
+      <div class="hi-card-bg"><div class="hi-bg-text">${item.label}</div></div>
+      <div class="hi-arrow">↗</div>
+      <div class="hi-info">
+        <span class="hi-cat">${item.cat}</span>
+        <div class="hi-name">${item.name}</div>
+      </div>`;
+    return card;
   }
 
-  // Form — passes through to Formspree if ID is set; shows fallback UI if not
-  function handleSubmit(e) {
-    if (e.target.action.includes('YOUR_FORM_ID')) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.textContent = 'Message Sent ✓';
-      btn.style.borderColor = 'var(--accent)';
-      btn.style.background = 'rgba(200,169,110,0.1)';
-      setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; }, 3000);
-    }
-    // Real Formspree ID = submits normally, Formspree handles redirect/confirmation
+  function buildReel(trackId, items, reversed) {
+    const track = document.getElementById(trackId);
+    const doubled = reversed ? [...items].reverse() : items;
+    [...doubled, ...doubled].forEach(item => track.appendChild(buildReelCard(item)));
   }
+
+  buildReel('reelTrack1', REEL_ITEMS, false);
+  buildReel('reelTrack2', REEL_ITEMS, true);
 
   // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -912,6 +900,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   });
 </script>
 
+<script>
   // ── PROJECT DATA ──────────────────────────────────────────────
   const PROJECTS = {
     noir: {
