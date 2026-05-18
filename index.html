@@ -72,8 +72,6 @@ nav.scrolled { background:rgba(13,13,15,0.92); backdrop-filter:blur(12px); borde
 .hero-cta-wa:hover { background:#25D366; color:#000; }
 
 .hero-right { position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-.hero-video-note { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; }
-.hero-video-note span { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); border:1px solid var(--border); padding:0.5rem 1rem; }
 .hero-grid-art { width:100%; height:100%; position:absolute; display:grid; grid-template-columns:repeat(6,1fr); grid-template-rows:repeat(8,1fr); gap:1px; opacity:0.15; }
 .hero-grid-art div { background:var(--border2); animation:pulse-grid 4s ease-in-out infinite; }
 .hero-grid-art div:nth-child(3n) { animation-delay:0.5s; }
@@ -126,7 +124,7 @@ h2 em { font-style:italic; color:var(--accent); }
 #portfolio { background:var(--bg); overflow:hidden; }
 .portfolio-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:4rem; padding-bottom:2rem; border-bottom:1px solid var(--border); }
 
-/* HIGHLIGHT REEL — horizontal scroll carousel */
+/* HIGHLIGHT REEL */
 .highlight-reel { position:relative; overflow:hidden; margin:0 -3rem; }
 .highlight-reel::before,
 .highlight-reel::after {
@@ -230,12 +228,9 @@ h2 em { font-style:italic; color:var(--accent); }
 .msg-btn-fb:hover  { background:rgba(0,153,255,0.08); border-color:#0099ff; color:#0099ff; }
 .msg-btn-tg  { border-color:rgba(36,161,222,0.3); }
 .msg-btn-tg:hover  { background:rgba(36,161,222,0.08); border-color:#24a1de; color:#24a1de; }
-.msg-btn-icon { display:flex; align-items:center; justify-content:center; width:22px; height:22px; }
 .msg-btn-text { display:flex; flex-direction:column; gap:0.15rem; }
 .msg-btn-name { font-size:0.7rem; letter-spacing:0.15em; }
 .msg-btn-sub { font-size:0.55rem; color:var(--muted); letter-spacing:0.1em; text-transform:none; }
-.wa-link { display:inline-flex; align-items:center; gap:0.5rem; color:#25D366; text-decoration:none; font-size:0.65rem; letter-spacing:0.15em; margin-top:1rem; padding:0.6rem 1rem; border:1px solid rgba(37,211,102,0.3); transition:background 0.3s; }
-.wa-link:hover { background:rgba(37,211,102,0.1); }
 
 /* PRIVACY */
 #privacy { background:var(--bg); border-top:1px solid var(--border); max-width:780px; }
@@ -257,193 +252,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
 .fade-up { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease,transform 0.8s ease; }
 .fade-up.visible { opacity:1; transform:translateY(0); }
 
-/* PROJECT PAGE OVERLAY */
-.project-overlay {
-  position: fixed; inset: 0; z-index: 500;
-  background: var(--bg);
-  overflow-y: auto;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.5s ease;
-}
-.project-overlay.open {
-  opacity: 1; pointer-events: all;
-}
-.project-overlay-inner {
-  min-height: 100vh;
-  padding: 0 0 6rem;
-}
-
-/* Project nav bar */
-.project-nav {
-  position: sticky; top: 0; z-index: 10;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.5rem 3rem;
-  background: rgba(13,13,15,0.95);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.project-back {
-  display: flex; align-items: center; gap: 0.75rem;
-  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--muted); background: none; border: none; cursor: pointer;
-  font-family: 'DM Mono', monospace;
-  transition: color 0.3s;
-}
-.project-back:hover { color: var(--accent); }
-.project-nav-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1rem; font-weight: 300; color: var(--white); letter-spacing: 0.1em;
-}
-.project-nav-cat {
-  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
-}
-
-/* Project hero */
-.project-hero {
-  padding: 5rem 3rem 3rem;
-  border-bottom: 1px solid var(--border);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
-}
-.project-hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300;
-  color: var(--white); line-height: 1; margin-bottom: 1.5rem;
-}
-.project-hero-title em { font-style: italic; color: var(--accent); }
-.project-hero-desc {
-  font-size: 0.72rem; line-height: 2; color: var(--muted); letter-spacing: 0.05em;
-}
-.project-meta {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--border); border: 1px solid var(--border);
-}
-.project-meta-item {
-  background: var(--bg2); padding: 1.25rem;
-}
-.project-meta-label {
-  font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--accent); display: block; margin-bottom: 0.4rem;
-}
-.project-meta-val {
-  font-size: 0.7rem; color: var(--text); letter-spacing: 0.05em;
-}
-
-/* AUTO-SCROLL GALLERY */
-.gallery-section {
-  padding: 4rem 0;
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-}
-.gallery-label {
-  padding: 0 3rem;
-  font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 2rem;
-  display: flex; align-items: center; gap: 1rem;
-}
-.gallery-label::before { content:''; display:block; width:30px; height:1px; background:var(--accent); }
-
-.gallery-track-wrap {
-  position: relative;
-  overflow: hidden;
-  /* fade edges */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-}
-.gallery-track {
-  display: flex; gap: 12px;
-  width: max-content;
-  animation: gallery-scroll 30s linear infinite;
-  will-change: transform;
-}
-.gallery-track:hover { animation-play-state: paused; }
-.gallery-track-wrap.reverse .gallery-track {
-  animation-direction: reverse;
-}
-
-@keyframes gallery-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.gallery-slide {
-  flex-shrink: 0;
-  width: 340px; height: 220px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  position: relative; overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.3s;
-}
-.gallery-slide:hover { border-color: var(--accent); }
-.gallery-slide img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.gallery-slide:hover img { transform: scale(1.06); }
-
-/* Placeholder tile when no image */
-.gallery-slide-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0.5rem;
-}
-.gallery-slide-num {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem; font-weight: 300; color: transparent;
-  -webkit-text-stroke: 1px var(--border2);
-}
-.gallery-slide-note {
-  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
-}
-
-/* Project description below gallery */
-.project-body {
-  padding: 4rem 3rem;
-  display: grid; grid-template-columns: 2fr 1fr; gap: 5rem;
-  border-bottom: 1px solid var(--border);
-}
-.project-body-text {
-  font-size: 0.75rem; line-height: 2.1; color: var(--muted); letter-spacing: 0.04em;
-}
-.project-body-text p { margin-bottom: 1.5rem; }
-.project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
-.project-tag {
-  font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--muted); border: 1px solid var(--border); padding: 0.35rem 0.75rem;
-  transition: border-color 0.3s, color 0.3s;
-}
-.project-tag:hover { border-color: var(--accent); color: var(--accent); }
-.project-sidebar {}
-.project-sidebar-section { margin-bottom: 2.5rem; }
-.project-sidebar-label {
-  font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 0.75rem; display: block;
-}
-.project-sidebar-val {
-  font-size: 0.7rem; color: var(--text); line-height: 1.8; letter-spacing: 0.05em;
-}
-
-/* Project footer CTA */
-.project-cta-bar {
-  padding: 4rem 3rem;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.project-cta-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 300; color: var(--white);
-}
-.project-cta-text em { font-style: italic; color: var(--accent); }
-.project-cta-actions { display: flex; gap: 1rem; }
-
-@media(max-width:900px){
-  .project-hero { grid-template-columns: 1fr; padding: 4rem 1.5rem 2rem; }
-  .project-nav { padding: 1.2rem 1.5rem; }
-  .project-body { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
-  .project-cta-bar { flex-direction: column; gap: 2rem; padding: 3rem 1.5rem; text-align: center; }
-  .gallery-slide { width: 260px; height: 180px; }
-  .gallery-label { padding: 0 1.5rem; }
-}
-
+/* RESPONSIVE */
 @media(max-width:900px){
   #home { grid-template-columns:1fr; }
   .hero-right { display:none; }
@@ -451,15 +260,12 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   #contact { grid-template-columns:1fr; }
   .case-grid { grid-template-columns:1fr; }
   .testimonials { grid-template-columns:1fr; }
-  .portfolio-grid { grid-template-columns:1fr 1fr; grid-auto-rows:200px; }
-  .portfolio-item { grid-column:span 1 !important; grid-row:span 1 !important; }
   nav { padding:1.2rem 1.5rem; }
   .nav-links { gap:1.5rem; }
   section { padding:5rem 1.5rem; }
   .services-strip { padding:1.2rem 1.5rem; }
   .hero-left { padding:8rem 1.5rem 4rem; }
   footer { flex-direction:column; gap:1.5rem; text-align:center; }
-  .form-row { grid-template-columns:1fr; }
   .about-stats { grid-template-columns:repeat(3,1fr); }
   .sticky-cta { bottom:1rem; right:1rem; }
   .hero-actions { flex-direction:column; }
@@ -472,7 +278,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- STICKY CTA (appears after scrolling 50vh) -->
+<!-- STICKY CTA -->
 <div class="sticky-cta" id="stickyCta">
   <a href="https://wa.me/94779739163?text=Hi%20Megapixellk%2C%20I%27d%20like%20to%20start%20a%20project" class="sticky-wa" target="_blank">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -487,7 +293,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   <ul class="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#portfolio">Work</a></li>
+    <li><a href="portfolio.html">Work</a></li><!-- ← changed -->
     <li><a href="#contact">Contact</a></li>
     <li><a href="#contact" class="nav-cta-btn">Start a Project</a></li>
   </ul>
@@ -506,7 +312,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
       Visual storytelling through design — logos, branding, photo editing, AI-generated imagery, motion graphics, and video. Every pixel intentional.
     </p>
     <div class="hero-actions">
-      <a href="#portfolio" class="hero-cta">View Work</a>
+      <a href="portfolio.html" class="hero-cta">View Work</a><!-- ← changed -->
       <a href="https://wa.me/94779739163?text=Hi%20Megapixellk!" class="hero-cta hero-cta-wa" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Chat on WhatsApp
@@ -515,10 +321,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     <div class="hero-scroll-hint">Scroll</div>
   </div>
   <div class="hero-right">
-    <!-- UPGRADE: Replace grid with your showreel video -->
-    <!-- <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;">
-      <source src="showreel.mp4" type="video/mp4">
-    </video> -->
     <div class="hero-visual">
       <div class="hero-grid-art" id="heroGrid"></div>
     </div>
@@ -575,7 +377,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     <div class="section-label">Trust</div>
     <h2>Trusted by<br><em>50+ brands</em></h2>
     <p class="proof-tagline">— clients across Sri Lanka and internationally</p>
-    <!-- REPLACE with real client testimonials -->
     <div class="testimonials">
       <div class="testimonial">
         <p class="t-quote">"The rebrand completely transformed how our customers perceive us. Delivered ahead of schedule with zero revisions needed."</p>
@@ -593,7 +394,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
         <div class="t-role">Brand Manager, Soleil Events</div>
       </div>
     </div>
-    <!-- REPLACE with real client logos -->
     <div class="client-logos">
       <div class="client-logo-item">Bloom Co.</div>
       <div class="client-logo-item">Apex Group</div>
@@ -605,25 +405,22 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   </div>
 </section>
 
-<!-- PORTFOLIO -->
+<!-- PORTFOLIO PREVIEW -->
 <section id="portfolio">
   <div class="portfolio-header fade-up">
     <div>
       <div class="section-label">Portfolio</div>
       <h2>Selected<br><em>Work</em></h2>
     </div>
-    <p style="font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;align-self:flex-end;">Click any card to explore the project →</p>
+    <a href="portfolio.html" style="font-size:0.68rem;color:var(--muted);letter-spacing:0.1em;text-decoration:none;align-self:flex-end;transition:color 0.3s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">View full portfolio →</a><!-- ← changed -->
   </div>
 
-  <!-- Row 1 — scrolls left -->
+  <!-- Reel row 1 — scrolls left -->
   <div class="highlight-reel">
     <div class="highlight-track-wrap">
-      <div class="highlight-track" id="reelTrack1">
-        <!-- cards duplicated via JS -->
-      </div>
-      <!-- Row 2 — scrolls right -->
-      <div class="highlight-track reverse" id="reelTrack2">
-      </div>
+      <div class="highlight-track" id="reelTrack1"></div>
+      <!-- Reel row 2 — scrolls right -->
+      <div class="highlight-track reverse" id="reelTrack2"></div>
     </div>
   </div>
 </section>
@@ -632,7 +429,6 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
 <section id="casestudy">
   <div class="section-label fade-up">Case Studies</div>
   <h2 class="fade-up">Problem → Solution<br><em>→ Result</em></h2>
-  <!-- REPLACE with real case studies from your actual projects -->
   <div class="case-grid fade-up">
     <div class="case-item">
       <div class="case-tag">Brand Identity</div>
@@ -691,25 +487,22 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   <div class="contact-right fade-up">
     <p class="contact-right-label">Reach out on your preferred platform</p>
     <div class="messenger-btns">
-      <!-- WhatsApp -->
       <a href="https://wa.me/94779739163" class="msg-btn msg-btn-wa" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         <div class="msg-btn-text">
           <span class="msg-btn-name">WhatsApp</span>
           <span class="msg-btn-sub">+94 77 973 9163 · fastest reply</span>
         </div>
       </a>
-      <!-- Facebook Messenger -->
       <a href="https://m.me/megapixellk" class="msg-btn msg-btn-fb" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.3 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;flex-shrink:0"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.3 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/></svg>
         <div class="msg-btn-text">
           <span class="msg-btn-name">Facebook Messenger</span>
           <span class="msg-btn-sub">facebook.com/megapixellk</span>
         </div>
       </a>
-      <!-- Telegram -->
       <a href="https://t.me/+94779739163" class="msg-btn msg-btn-tg" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px;flex-shrink:0"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         <div class="msg-btn-text">
           <span class="msg-btn-name">Telegram</span>
           <span class="msg-btn-sub">+94 77 973 9163</span>
@@ -758,56 +551,13 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
   </div>
 </section>
 
-<!-- PROJECT OVERLAY PAGE -->
-<div class="project-overlay" id="projectOverlay">
-  <div class="project-overlay-inner">
-    <div class="project-nav">
-      <button class="project-back" onclick="closeProject()">← Back to Work</button>
-      <div id="projectNavTitle" class="project-nav-title"></div>
-      <div id="projectNavCat" class="project-nav-cat"></div>
-    </div>
-    <div class="project-hero">
-      <div>
-        <div id="projectTitle" class="project-hero-title"></div>
-        <p id="projectDesc" class="project-hero-desc"></p>
-      </div>
-      <div id="projectMeta" class="project-meta"></div>
-    </div>
-    <div class="gallery-section">
-      <div class="gallery-label">Gallery</div>
-      <div class="gallery-track-wrap" id="galleryRow1">
-        <div class="gallery-track" id="galleryTrack1"></div>
-      </div>
-    </div>
-    <div class="gallery-section" style="padding-top:1rem;">
-      <div class="gallery-track-wrap reverse">
-        <div class="gallery-track" id="galleryTrack2"></div>
-      </div>
-    </div>
-    <div class="project-body">
-      <div>
-        <div id="projectBody" class="project-body-text"></div>
-        <div id="projectTags" class="project-tags"></div>
-      </div>
-      <div class="project-sidebar" id="projectSidebar"></div>
-    </div>
-    <div class="project-cta-bar">
-      <div class="project-cta-text">Like what you see?<br>Let's build something <em>together.</em></div>
-      <div class="project-cta-actions">
-        <a href="https://wa.me/94779739163" class="hero-cta hero-cta-wa" target="_blank">WhatsApp Us</a>
-        <a href="#contact" class="hero-cta" onclick="closeProject()">Start a Project</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Megapixel<span>lk</span></div>
   <div class="footer-copy">© 2025 Megapixellk. All rights reserved.</div>
   <div class="footer-links">
     <a href="#home">Home</a>
-    <a href="#portfolio">Work</a>
+    <a href="portfolio.html">Work</a><!-- ← changed -->
     <a href="#contact">Contact</a>
     <a href="#privacy">Privacy</a>
   </div>
@@ -826,7 +576,7 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
-  document.querySelectorAll('a,button,.portfolio-item,.skills-list li').forEach(el => {
+  document.querySelectorAll('a,button,.skills-list li').forEach(el => {
     el.addEventListener('mouseenter', () => ring.classList.add('expanded'));
     el.addEventListener('mouseleave', () => ring.classList.remove('expanded'));
   });
@@ -857,22 +607,28 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     observer.observe(el);
   });
 
-  // ── HIGHLIGHT REEL ──────────────────────────────────────────────
+  // ── HIGHLIGHT REEL ──
+  // All cards now navigate to portfolio.html on click
   const REEL_ITEMS = [
-    { id:'noir', cat:'Brand Identity', name:'The Noir Collective', bg:'p1', label:'Brand', img:'LOGO%20designs-01.png' },
-    { id:'dusk',       cat:'Photo Edit',       name:'Dusk Portrait Series',bg:'p2', label:'Lens'  },
-    { id:'frequency',  cat:'Flyer Design',     name:'Frequency Event',     bg:'p3', label:'Print' },
-    { id:'kinetic',    cat:'Motion Graphics',  name:'Kinetic Titles',      bg:'p4', label:'Move'  },
-    { id:'dreamscape', cat:'AI Image Gen',     name:'Dreamscape Vol.1',    bg:'p5', label:'AI'    },
-    { id:'cascade',    cat:'Video Edit',       name:'Cascade Showreel',    bg:'p6', label:'Film'  },
+    { cat:'Brand Identity',    name:'The Noir Collective',  bg:'p1', label:'Brand', img:'' },
+    { cat:'Photo Edit',        name:'Dusk Portrait Series', bg:'p2', label:'Lens',  img:'' },
+    { cat:'Flyer Design',      name:'Frequency Event',      bg:'p3', label:'Print', img:'' },
+    { cat:'Motion Graphics',   name:'Kinetic Titles',       bg:'p4', label:'Move',  img:'' },
+    { cat:'AI Image Gen',      name:'Dreamscape Vol.1',     bg:'p5', label:'AI',    img:'' },
+    { cat:'Video Edit',        name:'Cascade Showreel',     bg:'p6', label:'Film',  img:'' },
   ];
 
   function buildReelCard(item) {
     const card = document.createElement('div');
     card.className = 'hi-card ' + item.bg;
-    card.onclick = () => openProject(item.id);
+    // ← KEY CHANGE: clicking any card opens portfolio.html
+    card.onclick = () => window.location.href = 'portfolio.html';
+    card.style.cursor = 'pointer';
     card.innerHTML = `
-      <div class="hi-card-bg">${item.img ? `<img src="${item.img}" alt="${item.name}">` : `<div class="hi-bg-text">${item.label}</div>`}</div>
+      <div class="hi-card-bg">${item.img
+        ? `<img src="${item.img}" alt="${item.name}">`
+        : `<div class="hi-bg-text">${item.label}</div>`}
+      </div>
       <div class="hi-arrow">↗</div>
       <div class="hi-info">
         <span class="hi-cat">${item.cat}</span>
@@ -883,14 +639,14 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
 
   function buildReel(trackId, items, reversed) {
     const track = document.getElementById(trackId);
-    const doubled = reversed ? [...items].reverse() : items;
-    [...doubled, ...doubled].forEach(item => track.appendChild(buildReelCard(item)));
+    const list = reversed ? [...items].reverse() : items;
+    [...list, ...list].forEach(item => track.appendChild(buildReelCard(item)));
   }
 
   buildReel('reelTrack1', REEL_ITEMS, false);
   buildReel('reelTrack2', REEL_ITEMS, true);
 
-  // Smooth scroll
+  // Smooth scroll (internal anchors only)
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
@@ -899,179 +655,5 @@ footer { background:var(--bg); border-top:1px solid var(--border); padding:2.5re
     });
   });
 </script>
-
-<script>
-  // ── PROJECT DATA ──────────────────────────────────────────────
-  const PROJECTS = {
-    noir: {
-      title: 'The Noir<br><em>Collective</em>',
-      cat: 'Brand Identity',
-      desc: "A complete visual identity for a luxury lifestyle collective — wordmark, colour system, typography, stationery, and brand guidelines delivered across print and digital.",
-      meta: [
-        { label: 'Client', val: 'The Noir Collective' },
-        { label: 'Year', val: '2024' },
-        { label: 'Deliverables', val: 'Logo, Brand System, Stationery' },
-        { label: 'Timeline', val: '3 weeks' },
-      ],
-      body: '<p>The challenge was to distill a multi-faceted lifestyle brand into a single, ownable mark. The resulting wordmark draws on architectural geometry — precise, quiet, unmistakable.</p><p>The full system spans primary and secondary lockups, a curated colour palette, typographic hierarchy, business cards, letterhead, and a 24-page brand guideline document.</p>',
-      tags: ['Logo Design','Typography','Brand Guidelines','Stationery','Print'],
-      sidebar: [
-        { label: 'Approach', val: 'Identity-first. Started with brand strategy, then translated values into visual language.' },
-        { label: 'Tools', val: 'Adobe Illustrator, InDesign' },
-        { label: 'Result', val: 'Zero revisions. Client launched within 2 weeks of brief.' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-    dusk: {
-      title: 'Dusk Portrait<br><em>Series</em>',
-      cat: 'Photo Editing',
-      desc: "A series of editorial portrait retouches — skin, light, and atmosphere refined to a cinematic standard for a local fashion photographer's portfolio.",
-      meta: [
-        { label: 'Client', val: 'Studio Dusk' },
-        { label: 'Year', val: '2024' },
-        { label: 'Deliverables', val: '24 retouched images' },
-        { label: 'Timeline', val: '1 week' },
-      ],
-      body: '<p>Working from RAW files, each image was treated for skin retouching, colour grading, and background separation. The goal: every shot feels like a magazine spread.</p><p>A consistent LUT was developed across the series to ensure visual cohesion when published as a collection.</p>',
-      tags: ['Photo Retouching','Colour Grading','Editorial','Lightroom','Photoshop'],
-      sidebar: [
-        { label: 'Technique', val: 'Frequency separation retouching, dodge & burn, custom LUT development.' },
-        { label: 'Tools', val: 'Adobe Photoshop, Lightroom' },
-        { label: 'Volume', val: '24 hero images delivered' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-    frequency: {
-      title: 'Frequency<br><em>Event</em>',
-      cat: 'Flyer Design',
-      desc: "A complete print and digital collateral suite for a multi-day music event — posters, social assets, wristbands, and stage backdrops.",
-      meta: [
-        { label: 'Client', val: 'Frequency Events' },
-        { label: 'Year', val: '2023' },
-        { label: 'Deliverables', val: 'Print + Digital Suite' },
-        { label: 'Timeline', val: '10 days' },
-      ],
-      body: '<p>The brief called for energy without chaos. A dark base with aggressive neon accents — built to work at A1 poster scale and as a 1080x1080 Instagram tile simultaneously.</p><p>All assets were delivered print-ready (CMYK, 300dpi) and screen-optimised, with source files handed over for future use.</p>',
-      tags: ['Flyer Design','Event Branding','Print','Social Media','CMYK'],
-      sidebar: [
-        { label: 'Scale', val: 'A1 poster · A5 flyer · Story · Feed · Wristband · Backdrop' },
-        { label: 'Tools', val: 'Adobe Illustrator, Photoshop' },
-        { label: 'Print Specs', val: 'CMYK 300dpi, bleed & trim marks included' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-    kinetic: {
-      title: 'Kinetic<br><em>Titles</em>',
-      cat: 'Motion Graphics',
-      desc: "A set of animated lower-thirds, title cards, and transitions for a YouTube creator — premium motion at any playback size.",
-      meta: [
-        { label: 'Client', val: 'Creator — Confidential' },
-        { label: 'Year', val: '2024' },
-        { label: 'Deliverables', val: 'Motion pack — 20 elements' },
-        { label: 'Timeline', val: '2 weeks' },
-      ],
-      body: '<p>Typography-driven motion — no gimmicks. Each element was built with clean easing curves in After Effects and exported as both ProRes Alpha and H.264 for flexibility.</p><p>The pack includes intro animations, lower-thirds in 3 variants, subscribe reminders, and an end-screen template, all fully editable via Essential Graphics.</p>',
-      tags: ['Motion Graphics','After Effects','Typography','YouTube','ProRes'],
-      sidebar: [
-        { label: 'Format', val: 'ProRes 4444 + H.264 · 1920x1080 · 25fps' },
-        { label: 'Tools', val: 'After Effects, Illustrator' },
-        { label: 'Extras', val: 'Essential Graphics panel for easy text edits' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-    dreamscape: {
-      title: 'Dreamscape<br><em>Vol. 1</em>',
-      cat: 'AI Image Generation',
-      desc: "A curated series of AI-generated concept visuals for a fashion editorial — pushing boundaries that traditional photography budgets could not reach.",
-      meta: [
-        { label: 'Client', val: 'Editorial — Confidential' },
-        { label: 'Year', val: '2024' },
-        { label: 'Deliverables', val: '12 hero visuals' },
-        { label: 'Timeline', val: '5 days' },
-      ],
-      body: '<p>Each image started with a detailed prompt architecture, then went through multiple generation rounds, manual selection, and post-processing in Photoshop to achieve print-ready quality.</p><p>The final 12 images are indistinguishable from high-end studio photography — produced at a fraction of the cost.</p>',
-      tags: ['AI Generation','Midjourney','Photoshop','Editorial','Concept'],
-      sidebar: [
-        { label: 'Process', val: 'Prompt engineering → generation → curation → Photoshop finishing' },
-        { label: 'Output', val: '4K · print-ready · colour graded' },
-        { label: 'Saving', val: 'Est. 80% cost vs traditional shoot' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-    cascade: {
-      title: 'Cascade<br><em>Showreel</em>',
-      cat: 'Video Editing',
-      desc: "A 90-second brand showreel edited from raw footage — paced to music, colour graded, and finished with motion graphics.",
-      meta: [
-        { label: 'Client', val: 'Cascade Productions' },
-        { label: 'Year', val: '2024' },
-        { label: 'Deliverables', val: '90s showreel + 30s cut' },
-        { label: 'Timeline', val: '1 week' },
-      ],
-      body: '<p>Working from 3 hours of raw footage, the edit was built around a music track — every cut landing on the beat, every transition purposeful. Colour grade matched to a warm, cinematic look.</p><p>A 30-second vertical cut was also delivered for Instagram Reels, re-timed and re-formatted from the same timeline.</p>',
-      tags: ['Video Editing','Colour Grade','Motion Graphics','Premiere Pro','Reels'],
-      sidebar: [
-        { label: 'Output', val: '4K H.264 · 16:9 master + 9:16 vertical cut' },
-        { label: 'Tools', val: 'Premiere Pro, After Effects, DaVinci Resolve' },
-        { label: 'Music', val: 'Licensed track — sync rights cleared' },
-      ],
-      images: [],
-      placeholderCount: 8,
-    },
-  };
-
-  function buildGalleryTrack(trackEl, images, placeholderCount, startIndex) {
-    const items = images.length > 0 ? images : Array.from({length: placeholderCount}, () => null);
-    const doubled = [...items, ...items];
-    trackEl.innerHTML = '';
-    doubled.forEach((src, i) => {
-      const slide = document.createElement('div');
-      slide.className = 'gallery-slide';
-      if (src) {
-        const img = document.createElement('img');
-        img.src = src; img.alt = ''; img.loading = 'lazy';
-        slide.appendChild(img);
-      } else {
-        const num = String((i % items.length) + startIndex).padStart(2,'0');
-        slide.innerHTML = '<div class="gallery-slide-placeholder"><div class="gallery-slide-num">' + num + '</div><div class="gallery-slide-note">Add image here</div></div>';
-      }
-      trackEl.appendChild(slide);
-    });
-  }
-
-  function openProject(id) {
-    const p = PROJECTS[id];
-    if (!p) return;
-    document.getElementById('projectNavTitle').textContent = p.title.replace(/<[^>]+>/g,'');
-    document.getElementById('projectNavCat').textContent = p.cat;
-    document.getElementById('projectTitle').innerHTML = p.title;
-    document.getElementById('projectDesc').textContent = p.desc;
-    document.getElementById('projectMeta').innerHTML = p.meta.map(m =>
-      '<div class="project-meta-item"><span class="project-meta-label">' + m.label + '</span><span class="project-meta-val">' + m.val + '</span></div>'
-    ).join('');
-    buildGalleryTrack(document.getElementById('galleryTrack1'), p.images, p.placeholderCount, 1);
-    buildGalleryTrack(document.getElementById('galleryTrack2'), p.images, p.placeholderCount, Math.ceil(p.placeholderCount/2)+1);
-    document.getElementById('projectBody').innerHTML = p.body;
-    document.getElementById('projectTags').innerHTML = p.tags.map(t => '<span class="project-tag">' + t + '</span>').join('');
-    document.getElementById('projectSidebar').innerHTML = p.sidebar.map(s =>
-      '<div class="project-sidebar-section"><span class="project-sidebar-label">' + s.label + '</span><div class="project-sidebar-val">' + s.val + '</div></div>'
-    ).join('');
-    const overlay = document.getElementById('projectOverlay');
-    overlay.classList.add('open');
-    overlay.scrollTop = 0;
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeProject() {
-    document.getElementById('projectOverlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
 </body>
 </html>
